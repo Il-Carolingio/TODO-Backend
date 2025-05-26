@@ -1,9 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const app = require('./src/app');
+const { PORT } = require('./src/config');
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
