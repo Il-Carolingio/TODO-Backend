@@ -1,9 +1,8 @@
-const taskService = require('../services/taskService');//Importamos el seervicio
-const { Task, User } = require('../models'); // Importa los modelos Task y User
-const { Op } = require('sequelize'); // Operadores de Sequelize para consultas
+import { Task, User } from '../models/index.js';
+import { Op } from 'sequelize';
 
 // Obtener todas las tareas (con filtros opcionales)
-const getAllTasks = async (req, res, next) => {
+export const getAllTasks = async (req, res, next) => {
   try {
     const { completed, search } = req.query;
     const whereClause = {};
@@ -33,7 +32,7 @@ const getAllTasks = async (req, res, next) => {
 };
 
 // Crear una nueva tarea (asociada al usuario logueado)
-const createTask = async (req, res, next) => {
+export const createTask = async (req, res, next) => {
   try {
     const { title, description } = req.body;
     const userId = req.user.id; // Asume que authMiddleware añade el usuario a req.user
@@ -52,7 +51,7 @@ const createTask = async (req, res, next) => {
 };
 
 // Obtener una tarea específica por ID
-const getTaskById = async (req, res, next) => {
+export const getTaskById = async (req, res, next) => {
   try {
     const task = await Task.findByPk(req.params.id, {
       include: [{ model: User, attributes: ['id', 'name'] }],
@@ -62,7 +61,7 @@ const getTaskById = async (req, res, next) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    // Opcional: Validar que la tarea pertenezca al usuario (si es necesario)
+    // Validar que la tarea pertenezca al usuario
     if (task.userId !== req.user.id) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
@@ -74,7 +73,7 @@ const getTaskById = async (req, res, next) => {
 };
 
 // Actualizar una tarea
-const updateTask = async (req, res, next) => {
+export const updateTask = async (req, res, next) => {
   try {
     const { title, description, completed } = req.body;
     const task = await Task.findByPk(req.params.id);
@@ -102,7 +101,7 @@ const updateTask = async (req, res, next) => {
 };
 
 // Eliminar una tarea
-const deleteTask = async (req, res, next) => {
+export const deleteTask = async (req, res, next) => {
   try {
     const task = await Task.findByPk(req.params.id);
 
@@ -119,12 +118,4 @@ const deleteTask = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  getAllTasks,
-  createTask,
-  getTaskById,
-  updateTask,
-  deleteTask,
 };

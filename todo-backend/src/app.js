@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const authRoutes = require('./routes/authRoutes');
-const taskRoutes = require('./routes/taskRoutes');
-const errorMiddleware = require('./middlewares/errorMiddleware');
+import express from 'express';
+import morgan from 'morgan';
+import cors from'cors';
+import helmet from 'helmet';
+import authRoutes from './routes/authRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
+import errorMiddleware from './middlewares/errorMiddleware.js';
 
 const app = express();
 
@@ -21,4 +21,4 @@ app.use('/api/tasks', taskRoutes);
 // Middleware de errores (siempre al final)
 app.use(errorMiddleware);
 
-module.exports = app;
+export default app;
