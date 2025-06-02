@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import styles from './Register.module.css'; // Archivo CSS Modules
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Register = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,69 +25,109 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    
     try {
-      // 1. Registra al usuario
       const response = await api.post('/auth/register', formData);
-      
-      // 2. Inicia sesión automáticamente después del registro
       login(response.data.user, response.data.token);
-      
-      // 3. Redirige al dashboard
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Error al registrarse');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h2>Crear Cuenta</h2>
-        
-        {error && <div className="error-message">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Nombre</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
+    <div className={styles.registerPage}>
+      <div className={styles.registerContainer}>
+        <div className={styles.registerIllustration}>
+          <h1>Únete a nuestra plataforma</h1>
+          <p>Crea tu cuenta y comienza a gestionar tus tareas eficientemente</p>
+          <div className={styles.ilustrationImage}>
+            <img 
+              src="https://cdn-icons-png.flaticon.com/512/4406/4406226.png" 
+              alt="Registro de usuario" 
             />
           </div>
+        </div>
 
-          <div className="form-group">
-            <label>Correo Electrónico</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+        <div className={styles.registerFormContainer}>
+          <div className={styles.registerHeader}>
+            <h2>Crear Cuenta</h2>
+            <p>Completa tus datos para registrarte</p>
           </div>
 
-          <div className="form-group">
-            <label>Contraseña</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              minLength="6"
-              required
-            />
+          {error && (
+            <div className={styles.errorMessage}>
+              <svg className={styles.errorIcon} viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className={styles.registerForm}>
+            <div className={styles.formGroup}>
+              <label htmlFor="name" className={styles.formLabel}>Nombre Completo</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={styles.formInput}
+                placeholder="Ej: Juan Pérez"
+                required
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.formLabel}>Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={styles.formInput}
+                placeholder="tucorreo@ejemplo.com"
+                required
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="password" className={styles.formLabel}>Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={styles.formInput}
+                placeholder="Mínimo 6 caracteres"
+                minLength="6"
+                required
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              className={styles.submitButton}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className={styles.spinner}></span>
+              ) : (
+                'Registrarse'
+              )}
+            </button>
+          </form>
+
+          <div className={styles.registerFooter}>
+            <p>¿Ya tienes cuenta? <Link to="/login" className={styles.loginLink}>Inicia Sesión</Link></p>
           </div>
-
-          <button type="submit" className="auth-button">
-            Registrarse
-          </button>
-        </form>
-
-        <div className="auth-footer">
-          ¿Ya tienes cuenta? <Link to="/login">Inicia Sesión</Link>
         </div>
       </div>
     </div>
