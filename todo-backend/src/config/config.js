@@ -10,8 +10,8 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // Configuración para Sequelize CLI (requiere estructura específica por entorno)
 const sequelizeConfig = {
   development: {
-    username: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    username: process.env.DB_USER || 'todouser',
+    password: process.env.DB_PASSWORD || 'todopassword',
     database: process.env.DB_NAME || 'todo_db',
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 3306,

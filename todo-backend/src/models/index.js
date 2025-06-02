@@ -16,23 +16,25 @@ const sequelize = new Sequelize(
   }
 );
 
-const modelDefiners = [
-  import('./Users.js'),
-  import('./Task.js')
-];
+// Importación directa (más confiable que dinámica)
+import userModel from './Users.js';
+import taskModel from './Task.js';
 
-const models = {};
-for (const modelDefiner of modelDefiners) {
-  const model = (await modelDefiner).default(sequelize);
-  models[model.name] = model;
+// Inicialización explícita
+const User = userModel(sequelize);
+const Task = taskModel(sequelize);
+
+if (User.associate) {
+  User.associate({ Task }); // El usuario tiene muchas tareas
 }
 
-Object.values(models).forEach(model => {
-  if (model.associate) {
-    model.associate(models);
-  }
-});
-
-export { sequelize };
-export const User = models.User;
-export const Task = models.Task;
+if (Task.associate) {
+  Task.associate({ User }); // Cada tarea pertenece a un usuario
+}
+  
+  // Exportación consolidada
+  export { 
+    sequelize,
+    User,
+    Task
+  };
