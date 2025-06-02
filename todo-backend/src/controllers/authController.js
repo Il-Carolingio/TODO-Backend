@@ -84,8 +84,7 @@ export const registerUser = async (req, res) => {
         name: newUser.name,
         email: newUser.email
       },
-      token,
-      expiresIn: process.env.NODE_ENV === 'production' ? '1h' : '7d'
+      token
     });
   } catch (error) {
     console.error('Error en registro:', error);

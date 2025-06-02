@@ -23,6 +23,7 @@ app.use(cors({
     credentials: true // Para permitir cookies/tokens
 }));
 
+
 // Rutas
 // 3. Rutas (registro único por ruta)
 app.use('/api/auth', authRoutes); // Todas las rutas de auth bajo /api/auth

@@ -11,12 +11,11 @@ export const generateToken = (user) => {
     id: user.id,
     email: user.email,
     iat: Math.floor(Date.now() / 1000),
-    exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 días
+    //exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 días
   };
 
-  const expiresIn = process.env.NODE_ENV === 'production' ? '30m' : '7d';
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn
+    expiresIn: process.env.NODE_ENV === 'production' ? '30m' : '7d'
   });
 
   return token;
