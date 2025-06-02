@@ -33,8 +33,4 @@ if (Task.associate) {
 }
   
   // Exportación consolidada
-  export { 
-    sequelize,
-    User,
-    Task
-  };
+  export {sequelize, User, Task}

@@ -1,5 +1,5 @@
 // authController.js
-import { User } from '../models/index.js';
+import  {User}  from '../models/index.js';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/authUtils.js';
 

@@ -1,4 +1,4 @@
-import { Task, User } from '../models/index.js';
+import {Task,User}  from '../models/index.js';
 import { Op } from 'sequelize';
 
 // Obtener todas las tareas (con filtros opcionales)
