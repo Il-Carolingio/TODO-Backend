@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import styles from './TaskForm.module.css';
 
 const TaskForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    completed: false,
+    title: initialData?.title || '',
+    description: initialData?.description || '',
+    completed: initialData?.completed || false
   });
 
   // Si hay datos iniciales (edición), cargarlos
@@ -36,46 +37,65 @@ const TaskForm = ({ onSubmit, initialData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div className="form-group">
-        <label>Título</label>
+    <form onSubmit={handleSubmit} className={styles.taskForm}>
+      <div className={styles.formGroup}>
+        <label htmlFor="title" className={styles.formLabel}>Título</label>
         <input
           type="text"
+          id="title"
           name="title"
           value={formData.title}
           onChange={handleChange}
+          className={styles.formInput}
           required
+          placeholder="Ingrese el título de la tarea"
         />
       </div>
-      <div className="form-group">
-        <label>Descripción</label>
+      
+      <div className={styles.formGroup}>
+        <label htmlFor="description" className={styles.formLabel}>Descripción</label>
         <textarea
+          id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
+          className={styles.formTextarea}
+          placeholder="Describa la tarea..."
+          rows="4"
         />
       </div>
-      <div className="form-group checkbox">
-        <label>
+      
+      <div className={`${styles.formGroup} ${styles.checkboxContainer}`}>
+        <label className={styles.checkboxLabel}>
           <input
             type="checkbox"
             name="completed"
             checked={formData.completed}
             onChange={handleChange}
+            className={styles.formCheckbox}
           />
-          Completada
+          <span className={styles.checkmark}></span>
+          Tarea completada
         </label>
       </div>
-      <button type="submit">
-        {initialData ? 'Actualizar Tarea' : 'Crear Tarea'}
-      </button>
-      {initialData && (
-        <button type="button" onClick={() => onSubmit(null)}>
-          Cancelar
+      
+      <div className={styles.formButtons}>
+        <button type="submit" className={styles.submitButton}>
+          {initialData ? 'Actualizar Tarea' : 'Crear Tarea'}
         </button>
-      )}
+        
+        {initialData && (
+          <button 
+            type="button" 
+            onClick={() => onSubmit(null)} 
+            className={styles.cancelButton}
+          >
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
-  );
+);
 };
 
 export default TaskForm;
