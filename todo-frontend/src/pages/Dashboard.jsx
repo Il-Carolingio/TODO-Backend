@@ -12,6 +12,9 @@ const Dashboard = () => {
   const [editingTask, setEditingTask] = useState(null);
   const navigate = useNavigate(); //Hook para navegacion
 
+  const handleCancel = () => {
+    setEditingTask(null); // Esto cambiará initialData a null
+  };
   // Obtener tareas al cargar el componente
   useEffect(() => {
     fetchTasks();
@@ -90,7 +93,7 @@ const Dashboard = () => {
             <h2>{editingTask ? "Editar Tarea" : "Nueva Tarea"}</h2>
           </div>
           <div className={styles.cardBody}>
-            <TaskForm onSubmit={handleSubmit} initialData={editingTask} />
+            <TaskForm onSubmit={handleSubmit} initialData={editingTask} onCancel={handleCancel} />
           </div>
         </div>
 
@@ -104,6 +107,8 @@ const Dashboard = () => {
               tasks={tasks}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              currentUserId={user.id} // Pasa el ID del usuario actual
+              isAdmin='admin'
             />
           </div>
         </div>

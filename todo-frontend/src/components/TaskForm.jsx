@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './TaskForm.module.css';
 
-const TaskForm = ({ onSubmit, initialData }) => {
+const TaskForm = ({ onSubmit, initialData, onCancel }) => {
+  //Estado inicial del formulario
   const [formData, setFormData] = useState({
     title: initialData?.title || '',
     description: initialData?.description || '',
@@ -34,6 +35,11 @@ const TaskForm = ({ onSubmit, initialData }) => {
       // Resetear solo si es nueva tarea
       setFormData({ title: '', description: '', completed: false });
     }
+  };
+  // funcion para cancelar
+  const handleCancel = () =>{
+    setFormData({ title: '', description: '', completed: false }); onCancel?.();
+   
   };
 
   return (
@@ -87,7 +93,7 @@ const TaskForm = ({ onSubmit, initialData }) => {
         {initialData && (
           <button 
             type="button" 
-            onClick={() => onSubmit(null)} 
+            onClick={handleCancel} 
             className={styles.cancelButton}
           >
             Cancelar

@@ -172,3 +172,121 @@
       margin-top: 0.5rem;
     }
   }
+  .filterControls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    background: #f5f7fa;
+    border-radius: 6px;
+  }
+  
+  .filterButton {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .filterButton:hover {
+    background: #e9ecef;
+  }
+  
+  .activeFilter {
+    background: #0066cc;
+    color: white;
+  }
+  
+  .activeFilter:hover {
+    background: #0052a3;
+  }
+  /* Estilos existentes... */
+
+/* Nuevos estilos para los estados de carga y error */
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #d32f2f;
+  font-size: 1.1rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+/* Estilo para el nombre del usuario en las tareas */
+.taskUser {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.3rem;
+}
+
+/* Mejoras para los botones de filtro deshabilitados */
+.filterButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ajustes para los botones de acción condicionales */
+.taskActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Estilo para cuando no hay botones visibles */
+.taskActions:empty {
+  display: none;
+}
+
+/* Estilos responsivos adicionales */
+@media (max-width: 600px) {
+  .filterControls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filterButton {
+    width: 100%;
+  }
+  
+  .taskContent {
+    flex-direction: column;
+  }
+  
+  .taskActions {
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+  }
+}
+.retryButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background: #0052a3;
+}
