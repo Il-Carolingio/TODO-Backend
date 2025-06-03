@@ -29,6 +29,7 @@ app.use(cors({
 app.use('/api/auth', authRoutes); // Todas las rutas de auth bajo /api/auth
 app.use('/api/tasks', taskRoutes); // Rutas de tasks bajo /api/tasks
 app.use('/api/test-token',authRoutes); // Ruta para crear un nuevo token de prueba
+app.use('/api/my-tasks', taskRoutes)// Ruta para obtener tareas por usuario actual
 
 
 // Middleware de errores (siempre al final)

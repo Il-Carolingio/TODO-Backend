@@ -1,12 +1,17 @@
-import {Task,User}  from '../models/index.js';
+import { Task, User } from '../models/index.js';
 import { Op } from 'sequelize';
 
 // Obtener todas las tareas (con filtros opcionales)
 export const getAllTasks = async (req, res, next) => {
   try {
-    const { completed, search } = req.query;
+    const { completed, search, filter } = req.query;
     const whereClause = {};
 
+    // Solo filtrar por usuario si se especifica ?filter=mine
+    if (filter === 'mine') {
+      console.log('El usuario actual es', req.user.id)
+      whereClause.userId = req.user.id; // Filtro por usuario autenticado
+    }
     // Filtro por estado "completed"
     if (completed === 'true' || completed === 'false') {
       whereClause.completed = completed === 'true';
